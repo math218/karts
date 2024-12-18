@@ -51,17 +51,19 @@ boton.addEventListener('click', () => {
   }
 });
 
-addEventListener("keydown", function(event) {
+// Agregar eventos para combinaciones de teclado
+addEventListener("keydown", async function (event) {
   if (event.shiftKey && event.ctrlKey) {
     manejarCookies.eraseCookie("intentos");
+    intentos = 3; // Reiniciar la variable también
     alert("Se han eliminado los intentos");
-  }
-  else if (event.altKey && event.shiftKey) {
+  } else if (event.altKey && event.shiftKey) {
     try {
-    await navigator.clipboard.writeText("もうせ");
+      await navigator.clipboard.writeText("もうせ");
+      alert("Texto copiado al portapapeles");
+    } catch (error) {
+      console.error("Error al copiar al portapapeles:", error);
+      alert("No se pudo copiar el texto. Verifica los permisos.");
     }
-    catch (error) {
-      console.error(error);
-      alert(error);
   }
 });
