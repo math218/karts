@@ -40,8 +40,7 @@ boton.addEventListener('click', () => {
       alert("Vuelve en 5 días o contacta al administrador");
     } else {
       const contrasena = contrasenaInput.value;
-      if (contrasena === "ruan_3") {
-        manejarCookies.setCookie("ruan_3", 'remove_the_3_letter_of_your_name', 900);
+      if (contrasena === "もうせ") {
         window.location.href = "index2.html?mensaje=seguro";
       } else {
         intentos--;
@@ -56,5 +55,13 @@ addEventListener("keydown", function(event) {
   if (event.shiftKey && event.ctrlKey) {
     manejarCookies.eraseCookie("intentos");
     alert("Se han eliminado los intentos");
+  }
+  else if (event.altKey && event.shiftKey) {
+    try {
+    await navigator.clipboard.writeText("もうせ");
+    }
+    catch (error) {
+      console.error(error);
+      alert(error);
   }
 });
