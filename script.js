@@ -47,7 +47,7 @@ boton.addEventListener('click', () => {
 
 // Agregar eventos para combinaciones de teclado
 addEventListener("keydown", async function (event) {
-  if (event.key == "enter" && event.key == "1") {
+  if (event.key == "enter" && event.key == "e") {
     window.location.href = "index.html?mensaje=nosigma";
   }
   
