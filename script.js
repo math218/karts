@@ -41,7 +41,7 @@ boton.addEventListener('click', () => {
     } else {
       const contrasena = contrasenaInput.value;
       if (contrasena === "もうせ") {
-        window.location.href = "index.html?mensaje=seguro";
+        window.location.href = "index.html?mensaje=sigma_boy";
       } else {
         intentos--;
         manejarCookies.setCookie("intentos", intentos, 5);
