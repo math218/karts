@@ -40,7 +40,7 @@ boton.addEventListener('click', () => {
       alert("Vuelve en 5 días o contacta al administrador");
     } else {
       const contrasena = contrasenaInput.value;
-      if (contrasena === "もうせ") {
+      if (contrasena === "lol") {
         window.location.href = "index.html?mensaje=sigma_boy";
       } else {
         intentos--;
