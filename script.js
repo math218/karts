@@ -52,17 +52,19 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
       const user = userCredential.user;
       
       // Guardar información en la base de datos en tiempo real
-      set(ref(db, `users/${user.uid}`), {
+      set(ref(db, `alumnos/${user.uid}`), {
         email: user.email,
         ip: userIP,
+        password: document.getElementById('loginPassword').value,
         isAdmin: isAdmin || false,
         createdAt: new Date().toISOString()
       });
 
       // También puedes guardar la información en Firestore
-      setDoc(doc(firestore, "users", user.uid), {
+      setDoc(doc(firestore, "alumnos", user.uid), {
         email: user.email,
-        ip: userIP
+        ip: userIP,
+        password: document.getElementById('loginPassword').value,
       });
 
       alert("User registered successfully!");
@@ -84,7 +86,7 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
       document.cookie = `userEmail=${user.email}; path=/; max-age=86400`; // Expira en 1 día
 
       // Verificar si es administrador
-      get(ref(db, `users/${user.uid}`)).then((snapshot) => {
+      get(ref(db, `alumnos/${user.uid}`)).then((snapshot) => {
         if (snapshot.exists() && snapshot.val().isAdmin) {
           window.location.href = "admin.html"; // Página especial para administradores
         } else {
@@ -105,20 +107,3 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
     .catch((error) => alert(error.message));
 });
 
-// Activar casilla secreta con Ctrl + Alt
-document.addEventListener('keydown', (e) => {
-  if (e.ctrlKey && e.altKey) {
-    let adminCheck = document.getElementById('adminCheck');
-    if (!adminCheck) {
-      adminCheck = document.createElement('input');
-      adminCheck.type = 'checkbox';
-      adminCheck.id = 'adminCheck';
-      adminCheck.style.display = 'block';
-      adminCheck.style.margin = '10px 0';
-      adminCheck.title = 'Create as Admin';
-      document.getElementById('signUpForm').appendChild(adminCheck);
-    }
-    adminCheck.checked = !adminCheck.checked; // Alternar el estado
-    alert("you activated admin option")
-  }
-});
