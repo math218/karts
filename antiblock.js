@@ -16,7 +16,8 @@ var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
       alert("Unauthorized access. Redirecting to login.");
       window.location.href = "login.html";
     }
-    else if (email == "cihangir.gultek@colegiolakeside.edu.mx") {
-
+    else if (email == "ikisantmar@gmail.com" || getCookie("userEmail") == "ikisantmar@gmail.com" && getCookie("smash_karts_enter") == null) {
+      document.cookie = `smash_karts_enter=ndjfanf-dfnsnfjd-sdfjdsfj; path=/; max-age=259200`;
+      alert("You are banned from this website. Redirecting to baned.html");
     window.location.href = "baned.html";
     }
