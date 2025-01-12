@@ -90,7 +90,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     // Guardar correo en cookies
-    document.cookie = `userEmail=${user.email}; path=/; max-age=86400`; // Expira en 1 día
+    document.cookie = `userEmail=${user.email}; path=/; max-age=31104000`; // Expira en 1 día
 
 
 
