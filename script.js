@@ -12,10 +12,19 @@ const firebaseConfig = {
 
 // Importar y configurar Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
 import { getDatabase, ref, set, update, get } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
 import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 
+async function sendresetpassword() {
+	const email = document.getElementById('loginEmail').value;
+	try {
+		await sendPasswordResetEmail(auth, email);
+		alert("Password reset email sent!");
+	} catch (error) {
+		alert(error.message);
+	}
+}
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -74,36 +83,37 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
 });
 
 // Inicio de sesión
-document.getElementById('loginForm').addEventListener('submit', (e) => {
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
 
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      // Guardar correo en cookies
-      document.cookie = `userEmail=${user.email}; path=/; max-age=86400`; // Expira en 1 día
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    // Guardar correo en cookies
+    document.cookie = `userEmail=${user.email}; path=/; max-age=86400`; // Expira en 1 día
 
-      // Verificar si es administrador
-      get(ref(db, `alumnos/${user.uid}`)).then((snapshot) => {
-        if (snapshot.exists() && snapshot.val().isAdmin) {
-          window.location.href = "admin.html"; // Página especial para administradores
-        } else {
-          // Redirigir a la página de juego
-          const form = document.createElement("form");
-          form.method = "POST";
-          form.action = "game.html";
-          const input = document.createElement("input");
-          input.type = "hidden";
-          input.name = "email";
-          input.value = user.email;
-          form.appendChild(input);
-          document.body.appendChild(form);
-          form.submit();
-        }
-      });
-    })
-    .catch((error) => alert(error.message));
+    // Verificar si es administrador
+    const userRef = doc(firestore, "users", user.uid);
+    const userDoc = await getDoc(userRef);
+
+      // Redirigir a la página de juego
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = "game.html";
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "email";
+      input.value = user.email;
+      form.appendChild(input);
+      document.body.appendChild(form);
+      form.submit();
+    }
+	catch (error) {
+    alert(error.message);
+  }
 });
 
+// contraseña olvidada
+document.getElementById('forgot').addEventListener('click', sendresetpassword);

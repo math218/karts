@@ -123,3 +123,11 @@ button {
 .signUp-link p a:hover {
   text-decoration: underline;
 }
+#forget {
+  color: #0ef;
+  text-decoration: none;
+  font-weight: 500;
+}
+#forget:hover {
+  text-decoration: underline;
+}
