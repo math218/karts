@@ -25,7 +25,16 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
 import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
 
-import { firebaseConfig} from "script.js";
+const firebaseConfig = {
+    apiKey: "AIzaSyAdekDU05GJpLjJCQ6Mk_H3WafMtiHr-fM",
+    authDomain: "aslskks-b468a.firebaseapp.com",
+    databaseURL: "https://aslskks-b468a-default-rtdb.firebaseio.com",
+    projectId: "aslskks-b468a",
+    storageBucket: "aslskks-b468a.firebasestorage.app",
+    messagingSenderId: "665183046756",
+    appId: "1:665183046756:web:e2e5ccea8e67fa2d632371",
+    measurementId: "G-TWM9LJEZCL"
+  };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
