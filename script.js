@@ -115,12 +115,15 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   }
 });
 
-const email = document.getElementById('loginEmail').value;
-var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
-if (validEmail.test(email) == false) {
-	alert("Invalid email address");
-	
-}
-else {
-document.getElementById('forgot').addEventListener('click', sendresetpassword);
-}
+
+
+document.getElementById('forgot').addEventListener('click', () => {
+	const email = document.getElementById('loginEmail').value;
+	var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+	if (validEmail.test(email) == false) {
+		alert("Invalid email address");
+	}
+	else {
+		sendresetpassword();
+	}
+});
