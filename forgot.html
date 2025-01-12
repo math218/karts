@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Login & Registration Form</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div class="wrapper">
+    <div class="form-forgot">
+      <form action="" id="loginForm">
+        <h2>Login</h2>
+        <div class="input-group">
+          <input type="email" id="email" required>
+          <label for="loginEmail">Email</label>`
+        </div>
+        <button type="submit">Send forgot email</button>
+      </form>
+    </div>
+
+</body>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+document.getElementById('form-forgot').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+  if (validEmail.test(email) == false) {
+    alert('Please enter a valid email address.');
+  }
+  else {
+  
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      alert('Password reset email sent!');
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+});
+</script>
+</html>
