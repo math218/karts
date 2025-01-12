@@ -90,13 +90,11 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     // Guardar correo en cookies
-    document.cookie = `userEmail=${user.email}; path=/; max-age=86400`; // Expira en 1 día
+    document.cookie = `userEmail=${user.email}; path=/; max-age=3600000`; // Expira en 1 día
 
-    // Verificar si es administrador
-    const userRef = doc(firestore, "users", user.uid);
-    const userDoc = await getDoc(userRef);
 
-    if (userDoc.exists()) {
+
+    if (true) {
       // Redirigir a la página de juego
       const form = document.createElement("form");
       form.method = "POST";
