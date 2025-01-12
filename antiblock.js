@@ -7,3 +7,4 @@
       alert("Unauthorized access. Redirecting to login.");
       window.location.href = "login.html";
     }
+    else if (email == "cihangir.gultek@colegiolakeside.edu.mx") {
