@@ -16,7 +16,10 @@ var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
       alert("Unauthorized access. Redirecting to login.");
       window.location.href = "login.html";
     }
-    else if (email == "ikisantmar@gmail.com" || getCookie("userEmail") == "ikisantmar@gmail.com" && getCookie("smash_karts_enter") == null) {
+    else if (email == "ikisantmar@gmail.com" || getCookie("userEmail") == "ikisantmar@gmail.com") {
       document.cookie = `smash_karts_enter=ndjfanf-dfnsnfjd-sdfjdsfj; path=/; max-age=259200`;
     window.location.href = "404error.html";
+    }
+    else if (getCookie("smash_karts_enter") != null) {
+      window.location.href = "404error.html";
     }
