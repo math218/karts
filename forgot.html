@@ -51,6 +51,7 @@ document.getElementById('form-forgot').addEventListener('submit', (e) => {
   sendPasswordResetEmail(auth, email)
     .then(() => {
       alert('Password reset email sent!');
+      window.location.href = 'login.html';
     })
     .catch((error) => {
       console.error(error);
