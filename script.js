@@ -12,19 +12,11 @@ const firebaseConfig = {
 
 // Importar y configurar Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
 import { getDatabase, ref, set, update, get } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
 import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 
-async function sendresetpassword() {
-	const email = document.getElementById('loginEmail').value;
-	try {
-		await sendPasswordResetEmail(auth, email);
-		alert("Password reset email sent!");
-	} catch (error) {
-		alert(error.message);
-	}
-}
+
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -49,37 +41,43 @@ async function getUserIP() {
 }
 
 // Registro de usuarios
+// Registro de usuarios
 document.getElementById('signUpForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('signUpEmail').value;
-  const password = document.getElementById('signUpPassword').value;
-  const isAdmin = document.getElementById('adminCheck')?.checked;
-  const userIP = await getUserIP();
+const password = document.getElementById('signUpPassword').value;
+const isAdmin = document.getElementById('adminCheck')?.checked;
+const userIP = await getUserIP();
 
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      
-      // Guardar información en la base de datos en tiempo real
-      set(ref(db, `alumnos/${user.uid}`), {
-        email: user.email,
-        ip: userIP,
-        password: document.getElementById('loginPassword').value,
-        isAdmin: isAdmin || false,
-        createdAt: new Date().toISOString()
-      });
+createUserWithEmailAndPassword(auth, email, password)
+  .then(async (userCredential) => {
+    const user = userCredential.user;
+    
+    // Enviar correo de verificación
+    await sendEmailVerification(user);
 
-      // También puedes guardar la información en Firestore
-      setDoc(doc(firestore, "alumnos", user.uid), {
-        email: user.email,
-        ip: userIP,
-        password: document.getElementById('loginPassword').value,
-      });
+    // Guardar información en la base de datos en tiempo real
+    set(ref(db, `alumnos/${user.uid}`), {
+      email: user.email,
+      ip: userIP,
+      password: password, // Use the correct password variable
+      isAdmin: isAdmin || false,
+      createdAt: new Date().toISOString()
+    });
 
-      alert("User registered successfully!");
-      wrapper.classList.remove('active'); // Alternar al login después del registro
-    })
-    .catch((error) => alert(error.message));
+    // También puedes guardar la información en Firestore
+    setDoc(doc(firestore, "alumnos", user.uid), {
+      email: user.email,
+      ip: userIP,
+      password: password, // Use the correct password variable
+      isAdmin: isAdmin || false,
+      createdAt: new Date().toISOString()
+    });
+
+    alert("User registered successfully! Verification email sent.");
+    wrapper.classList.remove('active'); // Alternar al login después del registro
+  })
+  .catch((error) => alert(error.message));
 });
 
 // Inicio de sesión
@@ -98,6 +96,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const userRef = doc(firestore, "users", user.uid);
     const userDoc = await getDoc(userRef);
 
+    if (userDoc.exists()) {
       // Redirigir a la página de juego
       const form = document.createElement("form");
       form.method = "POST";
@@ -109,8 +108,10 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       form.appendChild(input);
       document.body.appendChild(form);
       form.submit();
+    } else {
+      alert("User data not found.");
     }
-	catch (error) {
+  } catch (error) {
     alert(error.message);
   }
 });
