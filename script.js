@@ -79,7 +79,18 @@ createUserWithEmailAndPassword(auth, email, password)
   })
   .catch((error) => alert(error.message));
 });
+window.onload = function() {
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  }
+  if (getCookie('userEmail') != null && getCookie('userEmail') != "ikisantmar@gmail.com") {
+    window.location.href = "game.html";
+  }
 
+}
 // Inicio de sesión
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
