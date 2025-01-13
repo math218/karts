@@ -34,5 +34,7 @@ var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
         document.cookie = `smash_karts_enter=ndjfanf-dfnsnfjd-sdfjdsfj; path=/; max-age=259200`;
         window.location.href = "404error.html";
       }
-  
+        if (e.shiftKey) {
+            window.location.href = "https://live.mathletics.com/";
+        }
      });
