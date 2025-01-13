@@ -2,16 +2,23 @@
     const params = new URLSearchParams(window.location.search);
     const email = params.get('email');
     const admin_enter = params.get('admin_enter');
+function getCookie(name) {
+    // Construir la expresión regular para buscar el nombre de la cookie
+    let cookieValue = document.cookie
+        .split('; ')
+        .find(row => row.startsWith(name + '='));
+    return cookieValue ? cookieValue.split('=')[1] : null;
+}
 
 
 
 var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
     // Verificar si el correo está presente
-    if (!email) {
+    if (!email && getCookie("") {
       alert("Unauthorized access. Redirecting to login.");
       window.location.href = "login.html";
     }
-    if (email == "" || getCookie("userEmail") == "") {
+    if (email == "") {
       document.cookie = `smash_karts_enter=ndjfanf-dfnsnfjd-sdfjdsfj; path=/; max-age=259200`;
     window.location.href = "404error.html";
     }
