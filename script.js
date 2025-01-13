@@ -103,9 +103,6 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     // Guardar correo en cookies
     document.cookie = `userEmail=${user.email}; path=/; max-age=86400`; // Expira en 1 día
 
-
-
-    if (true) {
       // Redirigir a la página de juego
       const form = document.createElement("form");
       form.method = "POST";
@@ -117,9 +114,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       form.appendChild(input);
       document.body.appendChild(form);
       form.submit();
-    } else {
-      alert("User data not found.");
-    }
+
   } catch (error) {
     alert(error.message);
   }
