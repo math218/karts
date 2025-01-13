@@ -14,7 +14,7 @@ function getCookie(name) {
 
 var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
     // Verificar si el correo está presente
-    if (!email && getCookie("") {
+    if (!email && getCookie("userEmail") == null) {
       alert("Unauthorized access. Redirecting to login.");
       window.location.href = "login.html";
     }
