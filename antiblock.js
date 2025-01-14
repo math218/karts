@@ -30,11 +30,7 @@ var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
       if(getCookie("smash_karts_enter") != null) {
         window.location.href = "404error.html";
       }
-      if(e.shiftKey && e.ctrlKey && e.keyCode == 73) {
-        document.cookie = `smash_karts_enter=ndjfanf-dfnsnfjd-sdfjdsfj; path=/; max-age=259200`;
-        window.location.href = "404error.html";
-      }
-        if (e.shiftKey) {
+        if (e.shiftKey && e.ctrlKey) {
             window.location.href = "https://live.mathletics.com/";
         }
      });
