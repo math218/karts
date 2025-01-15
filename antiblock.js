@@ -22,6 +22,6 @@ var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
     addEventListener("keydown", function (e)
     {
         if (e.shiftKey && e.ctrlKey) {
-            window.location.href = "https://live.mathletics.com/";
+            window.location.href = "https://mathletics.com/";
         }
      });
